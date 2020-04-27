@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: istio-egressgateway-ws-async
+spec:
+  selector:
+    istio: egressgateway # use Istio default gateway implementation
+  servers:
+    - port:
+        number: 443
+        name: https
+        protocol: HTTPS
+      hosts:
+        - minishift.host
+      tls:
+        mode: ISTIO_MUTUAL

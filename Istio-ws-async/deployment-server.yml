@@ -1,0 +1,42 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: ws-async-app
+    version: v1
+  name: ws-async-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ws-async-app
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: ws-async-app
+        group: soap-ws
+        version: v1
+      annotations:
+        sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+        - env:
+            - name: JAVA_OPTIONS
+              value: -Xms128m -Xmx128m -Xmn128m
+          name: ws-async-app
+          image: image-registry.openshift-image-registry.svc:5000/soap-ws-async/ws-async-app
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          resources:
+            requests:
+              memory: "200Mi"
+              cpu: "128m" # 1/5 core
+            limits:
+              memory: "400Mi"
+              cpu: "256m"
+          securityContext:
+            privileged: false

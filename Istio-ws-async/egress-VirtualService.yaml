@@ -1,0 +1,36 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ws-async-through-egress-gateway
+spec:
+  hosts:
+    - minishift.host
+  gateways:
+    - istio-egressgateway-ws-async
+    - mesh
+  http:
+    - match:
+        - gateways:
+            - mesh
+          port: 8082
+          authority:
+            prefix: "minishift.host"
+      rewrite: # We must rewrite Host header because of Soap client adds port value to it while request
+        authority: minishift.host
+      route:
+        - destination:
+            host: istio-egressgateway.istio-system.svc.cluster.local
+            subset: ws-async
+            port:
+              number: 443
+    - match:
+        - gateways:
+            - istio-egressgateway-ws-async
+          port: 443
+          authority:
+            prefix: "minishift.host"
+      route:
+        - destination:
+            host: minishift.host
+            port:
+              number: 8082
