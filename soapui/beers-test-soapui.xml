@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="223cc07a-7def-4f71-b8f9-2fe5460f3bc2" activeEnvironment="Default" name="beers-test" resourceRoot="" runType="PARALLELL" soapui-version="5.5.0" abortOnError="false" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="5fb5279d-5a92-440f-9408-5c35d098003f" wsaVersion="200508" name="BeersPortSoap11" type="wsdl" bindingName="{http://minishift.host/beer}BeersPortSoap11" soapVersion="1_1" anonymous="required" definition="file:beers.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/home/vodka/beers.wsdl"><con:part><con:url>file:/home/vodka/beers.wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://minishift.host/beer" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://minishift.host/beer" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://minishift.host/beer">
+  <wsdl:types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://minishift.host/beer" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="getBeerRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="id" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getBeerResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="beer" type="tns:beer"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="beer">
+        <xs:sequence>
+          <xs:element name="id" type="xs:int"/>
+          <xs:element name="name" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getBeerResponse">
+    <wsdl:part element="tns:getBeerResponse" name="getBeerResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getBeerRequest">
+    <wsdl:part element="tns:getBeerRequest" name="getBeerRequest"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="BeersPort">
+    <wsdl:operation name="getBeer">
+      <wsdl:input message="tns:getBeerRequest" name="getBeerRequest"></wsdl:input>
+      <wsdl:output message="tns:getBeerResponse" name="getBeerResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BeersPortSoap11" type="tns:BeersPort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getBeer">
+      <soap:operation soapAction="http://minishift.host/getBeerRequest"/>
+      <wsdl:input name="getBeerRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getBeerResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BeersPortService">
+    <wsdl:port binding="tns:BeersPortSoap11" name="BeersPortSoap11">
+      <soap:address location="http://localhost:8080/ws"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://minishift.host:8082/ws</con:endpoint></con:endpoints><con:operation id="8abae6dd-ef7d-4c4f-94fa-ebd7938838f9" isOneWay="false" action="http://minishift.host/getBeerRequest" name="getBeer" bindingOperationName="getBeer" type="Request-Response" outputName="getBeerResponse" inputName="getBeerRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="0d0c630f-99d0-469d-9f57-8d044e58757f" name="RequestAnon" useWsAddressing="true"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://minishift.host:8080/ws</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:beer="http://minishift.host/beer">
+   <soapenv:Header xmlns:wsa="http://www.w3.org/2005/08/addressing"><wsa:Action>http://minishift.host/getBeerRequest</wsa:Action><wsa:ReplyTo><wsa:Address>http://minishift.host:8082/response</wsa:Address></wsa:ReplyTo><wsa:FaultTo><wsa:Address>http://minishift.host:8082/fault</wsa:Address></wsa:FaultTo><wsa:MessageID>uuid:d4e0ad39-4473-4379-a2e8-a22e95602597</wsa:MessageID></soapenv:Header>
+   <soapenv:Body>
+      <beer:getBeerRequest>
+         <beer:id>2</beer:id>
+      </beer:getBeerRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://minishift.host/getBeerRequest" generateMessageId="true" addDefaultTo="true" replyTo="http://minishift.host:8082/response" addDefaultAction="true" faultTo="http://minishift.host:8082/fault"/><con:wsrmConfig version="1.2"/></con:call><con:call id="25fae868-c508-4d7b-bbf8-df2e507cdeae" name="Request 2" useWsAddressing="true"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://minishift.host:8082/ws</con:endpoint><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://minishift.host/getBeerRequest"/></con:call></con:operation></con:interface><con:testSuite id="fe78f1d1-4846-47f1-8b89-e54f0b995c4c" name="TestSuite 1"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="e3e1c76f-429f-4dc3-8025-8acda3272a46" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase 1" searchProperties="true"><con:settings/><con:testStep type="request" id="9517a6be-af1d-4d8d-ae9e-cc64a0e8d521" name="getBeer - RequestAnon"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>BeersPortSoap11</con:interface><con:operation>getBeer</con:operation><con:request name="getBeer - RequestAnon" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="true" useWsReliableMessaging="false" wssPasswordType="" id="3f43ad79-36ac-4e8f-9895-db4c877db77f"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://minishift.host:8080/ws</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:beer="http://minishift.host/beer">
+   <soapenv:Header xmlns:wsa="http://www.w3.org/2005/08/addressing"><wsa:Action>http://minishift.host/getBeerRequest</wsa:Action><wsa:ReplyTo><wsa:Address>http://minishift.host:8082/response</wsa:Address></wsa:ReplyTo><wsa:FaultTo><wsa:Address>http://minishift.host:8082/fault</wsa:Address></wsa:FaultTo><wsa:MessageID>uuid:d4e0ad39-4473-4379-a2e8-a22e95602597</wsa:MessageID></soapenv:Header>
+   <soapenv:Body>
+      <beer:getBeerRequest>
+         <beer:id>2</beer:id>
+      </beer:getBeerRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="c2f9106a-21b3-40be-85cd-f0a7302ee933" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://minishift.host/getBeerRequest" generateMessageId="true" addDefaultTo="true" replyTo="http://minishift.host:8082/response" addDefaultAction="true" faultTo="http://minishift.host:8082/fault"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:loadTest id="2746ccc9-47a2-4236-8dd6-f9b313983264" name="LoadTest 1"><con:settings/><con:threadCount>5</con:threadCount><con:startDelay>0</con:startDelay><con:sampleInterval>250</con:sampleInterval><con:calculateTPSOnTimePassed>true</con:calculateTPSOnTimePassed><con:resetStatisticsOnThreadCountChange>true</con:resetStatisticsOnThreadCountChange><con:historyLimit>-1</con:historyLimit><con:testLimit>2</con:testLimit><con:limitType>TIME</con:limitType><con:loadStrategy><con:type>Thread</con:type><con:config><startThreadCount>5</startThreadCount><endThreadCount>5</endThreadCount></con:config></con:loadStrategy><con:assertion type="Step Status" name="Step Status"/><con:maxAssertionErrors>100</con:maxAssertionErrors><con:cancelExcessiveThreads>true</con:cancelExcessiveThreads><con:strategyInterval>500</con:strategyInterval></con:loadTest><con:properties/></con:testCase><con:properties/></con:testSuite><con:endpointStrategy/><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
