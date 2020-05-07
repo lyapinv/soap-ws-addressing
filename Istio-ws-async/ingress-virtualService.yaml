@@ -4,7 +4,7 @@ metadata:
   name: ws-async-through-ingress-gateway
 spec:
   hosts:
-    - "*"
+    - "*" # Внешний Hostname вашего сервиса (Внешнее DNS имя)
   gateways:
     - istio-ingressgateway-ws-async
   http:
