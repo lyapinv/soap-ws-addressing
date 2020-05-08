@@ -7,11 +7,16 @@ eval $(crc oc-env)
 #
 docker login -u kubeadmin -p $(oc whoami -t) default-route-openshift-image-registry.apps-crc.testing
 
-#
+# Delete project and wait until all its resources being deleted - need for success creation new project
 oc delete project soap-ws-async
-
-echo "Wait for project being deleted"
-sleep 3;
+DEL_RES="$(oc get project.project.openshift.io/soap-ws-async --show-kind --ignore-not-found)"
+while [ ${#DEL_RES} != 0 ];
+    do
+        echo "Updating";
+        sleep 1;
+        DEL_RES="$(oc get project.project.openshift.io/soap-ws-async --show-kind --ignore-not-found)";
+        echo "DEBUG. Available symbols" : ${#DEL_RES};
+    done && echo "Finish waiting for project deletion.\n";
 
 echo "Create new project"
 #
