@@ -25,7 +25,7 @@ spec:
             - name: JAVA_OPTIONS
               value: -Xms128m -Xmx128m -Xmn128m
           name: ws-async-app
-          image: image-registry.openshift-image-registry.svc:5000/soap-ws-async/ws-async-app
+          image: image-registry.openshift-image-registry.svc:5000/soap-ws-async/ws-async-app:v7
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080

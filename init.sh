@@ -29,13 +29,13 @@ CRC_REGISTRY=default-route-openshift-image-registry.apps-crc.testing
 mvn clean package
 
 #
-docker build -t soap-ws-async/ws-async-app test-soap-ws-server/.
+docker build -t soap-ws-async/ws-async-app:v7 test-soap-ws-server/.
 
 #
-docker tag soap-ws-async/ws-async-app $CRC_REGISTRY/soap-ws-async/ws-async-app
+docker tag soap-ws-async/ws-async-app:v7 $CRC_REGISTRY/soap-ws-async/ws-async-app:v7
 
 #
-docker push $CRC_REGISTRY/soap-ws-async/ws-async-app
+docker push $CRC_REGISTRY/soap-ws-async/ws-async-app:v7
 
 #
 oc delete deployment ws-async-app -n soap-ws-async
@@ -62,8 +62,12 @@ oc apply -f Istio-ws-async/egress-ServiceEntry.yaml -n soap-ws-async
 #
 oc apply -f Istio-ws-async/egress-DestinationRule.yaml -n soap-ws-async
 
-#
+# ----------------------------------------- Custom
+# Ограничить пул коннектов для Ingress трафика
+oc apply -f Istio-ws-async/ingress-DestinationRule.yaml -n soap-ws-async
+# -----------------------------------------
 
+#
 #
 #
 #

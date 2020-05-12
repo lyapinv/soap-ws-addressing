@@ -1,0 +1,18 @@
+# Restrict max pool connections for all traffic routed to "ws-async-app.prod.svc.cluster.local"
+# Если в кластере используется mTLS то нужно обязвтельно явно указать в DR.  нашем примере mTLS используется.
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ws-async-through-ingress-gateway
+spec:
+  host: ws-async-app.soap-ws-async.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+    connectionPool:
+      tcp:
+        maxConnections: 4
+      http:
+#        maxRetries: 3
+        http1MaxPendingRequests: 4
+        maxRequestsPerConnection: 10
