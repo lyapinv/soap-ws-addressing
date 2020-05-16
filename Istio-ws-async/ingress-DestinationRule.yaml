@@ -9,10 +9,35 @@ spec:
   trafficPolicy:
     tls:
       mode: ISTIO_MUTUAL
-    connectionPool:
-      tcp:
-        maxConnections: 4
-      http:
+#    connectionPool:
+#      tcp:
+#        maxConnections: 1
+#      http:
 #        maxRetries: 3
-        http1MaxPendingRequests: 4
-        maxRequestsPerConnection: 10
+#        http1MaxPendingRequests: 1
+#        maxRequestsPerConnection: 10
+  subsets:
+    - name: privileged
+      labels:
+        version: v1
+      trafficPolicy:
+        tls:
+          mode: ISTIO_MUTUAL
+        connectionPool:
+          tcp:
+            maxConnections: 10
+          http:
+            http1MaxPendingRequests: 10
+#            maxRequestsPerConnection: 1
+    - name: regular
+      labels:
+        version: v1
+      trafficPolicy:
+        tls:
+          mode: ISTIO_MUTUAL
+        connectionPool:
+          tcp:
+            maxConnections: 1
+          http:
+            http1MaxPendingRequests: 1
+#            maxRequestsPerConnection: 1

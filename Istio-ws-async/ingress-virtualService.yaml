@@ -7,6 +7,7 @@ spec:
     - "*" # Внешний Hostname вашего сервиса (Внешнее DNS имя)
   gateways:
     - istio-ingressgateway-ws-async
+#    - mesh
   http:
     - match:
         - uri:
@@ -18,3 +19,17 @@ spec:
             port:
               number: 8080
             host: ws-async-app
+            subset: regular
+    - match:
+#        - sourceLabels:
+#            cpool: client-privileged
+        - uri:
+            prefix: /ws1
+      #          authority: #authority is used as workaround because of PORT presence in Host
+      #            prefix: "ws-async-app"
+      route:
+        - destination:
+            port:
+              number: 8080
+            host: ws-async-app
+            subset: privileged
